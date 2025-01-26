@@ -6,7 +6,7 @@ const Header = ({ toggleNavbar, cartCount }) => (
     {/* Menu Button */}
     <TouchableOpacity onPress={toggleNavbar} style={styles.menuButton}>
       <Image
-        source={require('../assets/menu.png')} // Replace with the correct path to your menu icon asset
+        source={require('../assets/menu.png')}
         style={styles.icon}
       />
     </TouchableOpacity>
@@ -15,13 +15,13 @@ const Header = ({ toggleNavbar, cartCount }) => (
     <Text style={styles.websiteName}>ShopEasy</Text>
 
     {/* Cart Icon */}
-    <View style={styles.cartContainer}>
+    <TouchableOpacity style={styles.cartContainer} onPress={toggleNavbar} >
       <Image
-        source={require('../assets/cart.png')} // Replace with the correct path to your cart icon asset
+        source={require('../assets/cart.png')}
         style={styles.icon}
       />
       {cartCount > 0 && <Text style={styles.cartCount}>{cartCount}</Text>}
-    </View>
+    </TouchableOpacity>
   </View>
 );
 
@@ -39,7 +39,7 @@ const styles = StyleSheet.create({
   icon: {
     width: 24,
     height: 24,
-    tintColor: '#fff', // Optional, applies a white tint to the icon
+    tintColor: '#fff',
   },
   websiteName: {
     fontSize: 20,

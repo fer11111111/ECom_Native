@@ -1,5 +1,5 @@
 // src/components/Navbar.js
-import React, { useState } from 'react';
+import React from 'react';
 import { View, Text, StyleSheet, TouchableOpacity, Modal, FlatList } from 'react-native';
 
 const Navbar = ({ isVisible, onClose, categories }) => {
@@ -36,7 +36,7 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     alignItems: 'flex-start',
-    backgroundColor: 'rgba(0, 0, 0, 0.5)', // Transparent overlay
+    backgroundColor: 'rgba(0, 0, 0, 0.5)',
     opacity: 0.8,
   },
   menuPanel: {

@@ -1,27 +1,18 @@
 // src/components/Navbar.js
-import React, { useState } from 'react';
+import React from 'react';
 import { View, Text, StyleSheet, TouchableOpacity, Modal, FlatList } from 'react-native';
 
-const Navbar = ({ isVisible, onClose, categories }) => {
+const GameOverlay = ({ isVisible, onClose, toggleGame }) => {
   return (
     <Modal
-      animationType="slide"
+      animationType="fade"
       transparent={true}
       visible={isVisible}
       onRequestClose={onClose}
     >
       <View style={styles.overlay}>
         <View style={styles.menuPanel}>
-          <Text style={styles.title}>Categories</Text>
-          <FlatList
-            data={categories}
-            keyExtractor={(item) => item.fields.categoryName}
-            renderItem={({ item }) => (
-              <TouchableOpacity style={styles.menuItem}>
-                <Text style={styles.menuItemText}>{item.categoryName}</Text>
-              </TouchableOpacity>
-            )}
-          />
+          <Text style={styles.title}>Games</Text>
           <TouchableOpacity style={styles.closeButton} onPress={onClose}>
             <Text style={styles.closeText}>Close</Text>
           </TouchableOpacity>
@@ -35,8 +26,8 @@ const styles = StyleSheet.create({
   overlay: {
     flex: 1,
     justifyContent: 'center',
-    alignItems: 'flex-start',
-    backgroundColor: 'rgba(0, 0, 0, 0.5)', // Transparent overlay
+    alignItems: 'center',
+    backgroundColor: 'rgba(0, 0, 0, 0.5)',
     opacity: 0.8,
   },
   menuPanel: {
@@ -47,6 +38,8 @@ const styles = StyleSheet.create({
     paddingTop: 60,
     borderTopRightRadius: 30,
     borderBottomRightRadius: 30,
+    borderTopLeftRadius: 30,
+    borderBottomLeftRadius: 30,
     shadowColor: '#000',
     shadowOpacity: 0.1,
     shadowRadius: 4,
@@ -84,4 +77,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default Navbar;
+export default GameOverlay;
