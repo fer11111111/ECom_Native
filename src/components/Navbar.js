@@ -5,7 +5,7 @@ import { View, Text, StyleSheet, TouchableOpacity, Modal, FlatList } from 'react
 const Navbar = ({ isVisible, onClose, categories }) => {
   return (
     <Modal
-      animationType="slide"
+      animationType="fade"
       transparent={true}
       visible={isVisible}
       onRequestClose={onClose}
