@@ -42,11 +42,11 @@ const App = () => {
       })
       .then(response => {
         setProducts(response.data.items);
-        setLoading(false);
+        // setLoading(false);
       })
       .catch(error => {
         console.error('Error fetching data:', error);
-        setLoading(false);
+        // setLoading(false);
       });
   };
 
@@ -76,17 +76,20 @@ const App = () => {
     setGameVisible(!isGameVisible);
   };
   useEffect(() => {
+    setTimeout(() => {
+      setLoading(false);
+    }, 5000);
     fetchProducts();
     fetchCategories();
   }, []);
 
 
-  useEffect(() => {
-    const timer = setTimeout(() => {
-      setLoading(false);
-    }, 10000);
-    return () => clearTimeout(timer);
-  }, []);
+  // useEffect(() => {
+  //   const timer = setTimeout(() => {
+  //     setLoading(false);
+  //   }, 10000);
+  //   return () => clearTimeout(timer);
+  // }, []);
 
   if (loading) {
     return (
@@ -94,8 +97,7 @@ const App = () => {
         <LottieView
           source={require('./src/assets/loading-spinner.json')}
           autoPlay
-          loop= {false}
-          duration={10000}
+          loop
           style={styles.lottieAnimation}
         />
       </View>
@@ -156,7 +158,7 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: '#000',
+    backgroundColor: '#232323',
   },
 
   detailsContainer: {
