@@ -1,16 +1,23 @@
 import React from 'react';
-import { FlatList, View } from 'react-native';
+import { FlatList, View, StyleSheet } from 'react-native';
 import ProductCard from './ProductCard';
 
-const ProductList = ({ products, selectedProduct, setSelectedProduct}) => (
+const ProductList = ({ products, category}) => (
   <View>
     <FlatList
       data={products}
       keyExtractor={(item) => item.fields.name}
-      renderItem={({ item }) => <ProductCard product={item} selectedProduct={selectedProduct} setSelectedProduct={setSelectedProduct}/>}
+      contentContainerStyle={styles.contentContainerStyle}
+      renderItem={({ item }) => <ProductCard product={item} category={category}/>}
     />
   </View>
 );
 
+const styles = StyleSheet.create({
+  contentContainerStyle: {
+    paddingTop: 70,
+    paddingBottom: 120,
+    },
+});
 
 export default ProductList;

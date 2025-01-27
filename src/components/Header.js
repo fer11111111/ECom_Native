@@ -1,7 +1,38 @@
-import React from 'react';
+import React,{useState,useEffect} from 'react';
 import { View, Text, TouchableOpacity, Image, StyleSheet } from 'react-native';
+import { useNavigation } from '@react-navigation/native';
+import axios from 'axios';
+const SPACE_ID = 'gxz2kpjfag3c';
+const ACCESS_TOKEN = 'bYq8sH_BpvozOhUgYIoBLxXdo0MAdbkdR1DrQJWDtMA';
 
-const Header = ({ toggleNavbar, cartCount }) => (
+const Header = ({ toggleNavbar, cartCount }) => {
+  const [products, setProducts] = useState([]);
+  const fetchProducts = () => {
+    const url = `https://cdn.contentful.com/spaces/${SPACE_ID}/entries`;
+
+    axios
+      .get(url, {
+        params: {
+          access_token: ACCESS_TOKEN,
+          content_type: 'products',
+        },
+      })
+      .then(response => {
+        setProducts(response.data.items);
+        // setLoading(false);
+      })
+      .catch(error => {
+        console.error('Error fetching data:', error);
+        // setLoading(false);
+      });
+  };
+  const navigation = useNavigation();
+
+  useEffect(() => {
+      fetchProducts();
+    }, []);
+
+  return(
   <View style={styles.header}>
     {/* Menu Button */}
     <TouchableOpacity onPress={toggleNavbar} style={styles.menuButton}>
@@ -15,7 +46,7 @@ const Header = ({ toggleNavbar, cartCount }) => (
     <Text style={styles.websiteName}>ShopEasy</Text>
 
     {/* Cart Icon */}
-    <TouchableOpacity style={styles.cartContainer} onPress={toggleNavbar} >
+    <TouchableOpacity style={styles.cartContainer} onPress={() => navigation.navigate('Cart') } >
       <Image
         source={require('../assets/cart.png')}
         style={styles.icon}
@@ -24,13 +55,14 @@ const Header = ({ toggleNavbar, cartCount }) => (
     </TouchableOpacity>
   </View>
 );
+}
 
 const styles = StyleSheet.create({
   header: {
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'space-between',
-    backgroundColor: '#000',
+    backgroundColor: '#232323',
     padding: 15,
   },
   menuButton: {

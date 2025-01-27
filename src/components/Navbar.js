@@ -1,8 +1,37 @@
-// src/components/Navbar.js
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { View, Text, StyleSheet, TouchableOpacity, Modal, FlatList } from 'react-native';
+import axios from 'axios';
+import { useNavigation } from '@react-navigation/native';
 
-const Navbar = ({ isVisible, onClose, categories }) => {
+const SPACE_ID = 'gxz2kpjfag3c';
+const ACCESS_TOKEN = 'bYq8sH_BpvozOhUgYIoBLxXdo0MAdbkdR1DrQJWDtMA';
+
+const Navbar = ({ isVisible, onClose, toggleNavbar, onCategorySelect }) => {
+  const [categories, setCategories] = useState([]);
+  const navigation = useNavigation();
+
+  const fetchCategories = () => {
+    const url = `https://cdn.contentful.com/spaces/${SPACE_ID}/entries`;
+
+    axios
+      .get(url, {
+        params: {
+          access_token: ACCESS_TOKEN,
+          content_type: 'category',
+        },
+      })
+      .then(response => {
+        setCategories(response.data.items); // Ensure this matches the correct data structure
+      })
+      .catch(error => {
+        console.error('Error fetching categories:', error);
+      });
+  };
+
+  useEffect(() => {
+    fetchCategories();
+  }, []);
+
   return (
     <Modal
       animationType="fade"
@@ -12,13 +41,23 @@ const Navbar = ({ isVisible, onClose, categories }) => {
     >
       <View style={styles.overlay}>
         <View style={styles.menuPanel}>
+          <TouchableOpacity style={styles.menuItem} onPress={() => navigation.navigate('Home')}>
+            <Text style={styles.menuItemText}>Home {'>'}</Text>
+          </TouchableOpacity>
           <Text style={styles.title}>Categories</Text>
           <FlatList
             data={categories}
             keyExtractor={(item) => item.fields.categoryName}
             renderItem={({ item }) => (
-              <TouchableOpacity style={styles.menuItem}>
-                <Text style={styles.menuItemText}>{item.categoryName}</Text>
+              <TouchableOpacity
+                style={styles.menuItem}
+                onPress={() => {
+                  onCategorySelect(item.fields.categoryName);
+                }}
+              >
+                <Text style={styles.menuItemText}>
+                  {item.fields.categoryName} {'>'}
+                </Text>
               </TouchableOpacity>
             )}
           />

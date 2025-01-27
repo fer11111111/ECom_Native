@@ -1,45 +1,64 @@
-import React from 'react';
-import { View, Text, Image, StyleSheet,TouchableOpacity } from 'react-native';
+import React, { useState, useEffect } from 'react';
+import { View, Text, Image, StyleSheet, TouchableOpacity } from 'react-native';
+import { useNavigation } from '@react-navigation/native';
+import { useCart } from '../CartContext';
+import { useProductContext } from '../ProductContext';
 
+const ProductCard = ({ product, category }) => {
+  const navigation = useNavigation();
+  const { addToCart, cart } = useCart();
+  const [addedToCart, setAddedToCart] = useState(false);
+  // const [products, setProducts] = useState([]);
+  // const navigation = useNavigation();
+  const { setSelectedProduct } = useProductContext();
 
-const ProductCard = ({ product, selectedProduct, setSelectedProduct}) => {
-  if (selectedProduct) {
-      console.log('Selected Product:', selectedProduct);
-      return (
-        <View style={styles.detailsContainer}>
-          <TouchableOpacity onPress={() => setSelectedProduct(null)}>
-            <Text style={styles.backButton}>← Back</Text>
-          </TouchableOpacity>
-          <Image
-            source={{ uri: selectedProduct.fields.media }}
-            style={styles.productImage}
-          />
-          <Text style={styles.productTitle}>{selectedProduct.fields.name}</Text>
-          <Text style={styles.productDescription}>
-            {selectedProduct.fields.description}
-          </Text>
-          <Text style={styles.productPrice}>
-            Price: ${selectedProduct.fields.price}
-          </Text>
-        </View>
-      );
-    }
-    return(
-  <View style={styles.productCard}>
-    <TouchableOpacity
-        style={styles.productItem}
-        onPress={() => setSelectedProduct(product)} // Set selected product
-    >
-        <Image style={styles.image} source={{ uri: product.fields.media }} />
-        <Text style={styles.productName}>{product.fields.name}</Text>
-        <Text style={styles.productPrice}>${product.fields.price}</Text>
-        <TouchableOpacity style={styles.closeButton}>
-          <Text style={styles.closeText}>BUY</Text>
+  const goToDetails = (product) => {
+    setSelectedProduct(product); // Set selected product in context
+    navigation.navigate('ProductDetails'); // Navigate to details page
+  };
+
+  // Check if the product is already in the cart
+  useEffect(() => {
+    const isInCart = cart.some((item) => item.fields.name === product.fields.name);
+    setAddedToCart(isInCart);
+  }, [cart, product]);
+
+  const handleBuy = () => {
+    addToCart(product); // Add product to the cart when the button is clicked
+    setAddedToCart(true); // Mark the product as added to cart
+  };
+
+  const goToCart = () => {
+    navigation.navigate('Cart'); // Navigate to Cart page
+  };
+
+  const categoryName = product.fields.categoryName;
+  if (category) {
+    return (
+      <View style={styles.productCard}>
+        <TouchableOpacity
+          style={styles.productItem}
+          onPress={() => goToDetails(product)} // Navigate to product details page
+        >
+          <Image style={styles.image} source={{ uri: product.fields.media }} />
+          <Text style={styles.productName}>{product.fields.name}</Text>
+          <Text style={styles.productPrice}>₹{product.fields.price}</Text>
+          {/* <Text style={styles.productCategory}>{category}</Text> */}
+          {addedToCart ? (
+            <TouchableOpacity style={styles.buyButton} onPress={goToCart}>
+              <Text style={styles.goToCartText}>Go to Cart &gt;</Text>
+            </TouchableOpacity>
+          ) : (
+            <TouchableOpacity style={styles.buyButton} onPress={handleBuy}>
+              <Text style={styles.buyText}>Buy</Text>
+            </TouchableOpacity>
+          )}
         </TouchableOpacity>
-    </TouchableOpacity>
+      </View>
+    );
+  }
 
-  </View>
-  );
+  return null; // If no category is passed, return null
 };
 
 const styles = StyleSheet.create({
@@ -54,6 +73,9 @@ const styles = StyleSheet.create({
     shadowOffset: { width: 0, height: 2 },
     borderWidth: 2,
     borderColor: '#000',
+    position: 'relative',
+    // top: 5,
+    // bottom: 1000,
   },
   image: {
     width: '100%',
@@ -71,18 +93,28 @@ const styles = StyleSheet.create({
     fontWeight: '400',
     color: '#4CAF50',
   },
-  closeButton: {
+  productCategory: {
+    fontSize: 14,
+    color: '#888',
+    marginBottom: 10,
+  },
+  buyButton: {
     position: 'absolute',
-    bottom: 1,
+    bottom: 5,
     width: '30%',
     alignItems: 'center',
     padding: 15,
     backgroundColor: '#262523',
     borderRadius: 10,
-    left: 250,
+    left: '70%',
   },
-  closeText: {
-    fontSize: 18,
+  buyText: {
+    fontSize: 14,
+    color: '#fff',
+    fontWeight: 'bold',
+  },
+  goToCartText: {
+    fontSize: 13,
     color: '#fff',
     fontWeight: 'bold',
   },
