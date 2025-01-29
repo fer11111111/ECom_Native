@@ -29,9 +29,11 @@ const ProductDetails = () => {
 
       <View style={styles.card}>
         <Image source={{ uri: selectedProduct.fields.media }} style={styles.image} />
-        <Text style={styles.name}>{selectedProduct.fields.name}</Text>
-        <Text style={styles.price}>₹{selectedProduct.fields.price}</Text>
-        <Text style={styles.description}>{selectedProduct.fields.description}</Text>
+        <View style={styles.productInfo}>
+          <Text style={styles.name}>{selectedProduct.fields.name}</Text>
+          <Text style={styles.price}>₹{selectedProduct.fields.price}</Text>
+          <Text style={styles.description}>{selectedProduct.fields.description}</Text>
+        </View>
 
         {/* Cart Controls */}
         <View style={styles.cartControls}>
@@ -100,20 +102,27 @@ const styles = StyleSheet.create({
     borderRadius: 8,
     marginBottom: 16,
   },
+  productInfo: {
+    alignItems: 'flex-start',
+    width: '100%',
+    marginBottom: 16,
+  },
   name: {
     fontSize: 24,
     fontWeight: 'bold',
     marginBottom: 8,
+    textAlign: 'left',
   },
   price: {
     fontSize: 20,
     color: '#4CAF50',
     marginBottom: 8,
+    textAlign: 'left',
   },
   description: {
     fontSize: 16,
     color: '#555',
-    textAlign: 'center',
+    textAlign: 'left',
     marginBottom: 16,
   },
   cartControls: {
@@ -174,10 +183,10 @@ const styles = StyleSheet.create({
     height: 50,
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: 'rgba(0, 0, 0, 0.3)', // Transparent black background
+    backgroundColor: 'rgba(0, 0, 0, 0.3)',
     borderRadius: 20,
     borderWidth: 2,
-    borderColor: '#fff', // White border
+    borderColor: '#fff',
     zIndex: 1,
   },
   backButtonText: {

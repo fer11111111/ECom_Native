@@ -8,6 +8,7 @@ const ProductList = ({ products, category}) => (
       data={products}
       keyExtractor={(item) => item.fields.name}
       contentContainerStyle={styles.contentContainerStyle}
+      numColumns={2}
       renderItem={({ item }) => <ProductCard product={item} category={category}/>}
     />
   </View>
@@ -15,9 +16,11 @@ const ProductList = ({ products, category}) => (
 
 const styles = StyleSheet.create({
   contentContainerStyle: {
-    paddingTop: 70,
-    paddingBottom: 120,
-    },
+    paddingTop: 20,
+    paddingHorizontal: 10,
+    paddingBottom: 500,
+  },
 });
+
 
 export default ProductList;

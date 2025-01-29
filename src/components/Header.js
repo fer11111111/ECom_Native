@@ -5,7 +5,7 @@ import axios from 'axios';
 const SPACE_ID = 'gxz2kpjfag3c';
 const ACCESS_TOKEN = 'bYq8sH_BpvozOhUgYIoBLxXdo0MAdbkdR1DrQJWDtMA';
 
-const Header = ({ toggleNavbar, cartCount }) => {
+const Header = ({ toggleNavbar, cartCount, items }) => {
   const [products, setProducts] = useState([]);
   const fetchProducts = () => {
     const url = `https://cdn.contentful.com/spaces/${SPACE_ID}/entries`;
@@ -34,7 +34,7 @@ const Header = ({ toggleNavbar, cartCount }) => {
 
   return(
   <View style={styles.header}>
-    {/* Menu Button */}
+
     <TouchableOpacity onPress={toggleNavbar} style={styles.menuButton}>
       <Image
         source={require('../assets/menu.png')}
@@ -42,10 +42,21 @@ const Header = ({ toggleNavbar, cartCount }) => {
       />
     </TouchableOpacity>
 
-    {/* Website Name */}
+    <TouchableOpacity style={styles.cartContainer} onPress={() => navigation.navigate('Home') } >
+      <Image
+        source={require('../assets/logo1.png')}
+        style={styles.icon2}
+      />
+    </TouchableOpacity>
     <Text style={styles.websiteName}>ShopEasy</Text>
 
-    {/* Cart Icon */}
+    <TouchableOpacity style={styles.cartContainer} onPress={() => navigation.navigate('Search', items) } >
+      <Image
+        source={require('../assets/search.png')}
+        style={styles.icon}
+      />
+    </TouchableOpacity>
+
     <TouchableOpacity style={styles.cartContainer} onPress={() => navigation.navigate('Cart') } >
       <Image
         source={require('../assets/cart.png')}
@@ -55,7 +66,7 @@ const Header = ({ toggleNavbar, cartCount }) => {
     </TouchableOpacity>
   </View>
 );
-}
+};
 
 const styles = StyleSheet.create({
   header: {
@@ -73,8 +84,13 @@ const styles = StyleSheet.create({
     height: 24,
     tintColor: '#fff',
   },
+  icon2: {
+    width: 45,
+    height: 45,
+    // tintColor: '#fff',
+  },
   websiteName: {
-    fontSize: 20,
+    fontSize: 22,
     fontWeight: 'bold',
     color: '#fff',
   },

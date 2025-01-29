@@ -8,7 +8,7 @@ const CartPage = () => {
   const [enteredPromoCode, setEnteredPromoCode] = useState('');
 
   const originalPrice = cart.reduce((acc, item) => acc + item.fields.price * item.count, 0) || 0;
-  const discount = applyPromoCode(enteredPromoCode) || 0; // Ensure discount is a number
+  const discount = applyPromoCode(enteredPromoCode) || 0;
   const discountedPrice = originalPrice - discount;
 
   const handlePromoCodeChange = (e) => {

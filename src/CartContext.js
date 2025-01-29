@@ -61,7 +61,6 @@ export const CartProvider = ({ children }) => {
   };
 
   const proceedToPayment = () => {
-    // Logic to reset cart or navigate to payment page
     console.log('Proceeding to payment...');
     setCart([]);
   };

@@ -6,6 +6,7 @@ import ProductList from '../components/ProductList';
 import Header from '../components/Header';
 import LottieView from 'lottie-react-native';
 import { useNavigation } from '@react-navigation/native';
+import BannerSlider from '../components/BannerSlider';
 
 const SPACE_ID = 'gxz2kpjfag3c';
 const ACCESS_TOKEN = 'bYq8sH_BpvozOhUgYIoBLxXdo0MAdbkdR1DrQJWDtMA';
@@ -15,7 +16,7 @@ const Home = () => {
   const [categories, setCategories] = useState([]);
   const [loading, setLoading] = useState(true);
   const [isNavbarVisible, setNavbarVisible] = useState(false);
-  const [selectedCategory, setSelectedCategory] = useState('All'); // Add state for selected category
+  const [selectedCategory, setSelectedCategory] = useState('All');
 
   const fetchProducts = () => {
     const url = `https://cdn.contentful.com/spaces/${SPACE_ID}/entries`;
@@ -46,7 +47,7 @@ const Home = () => {
         },
       })
       .then(response => {
-        setCategories(response.data.items); // Change this to match the correct field
+        setCategories(response.data.items);
       })
       .catch(error => {
         console.error('Error fetching categories:', error);
@@ -59,7 +60,7 @@ const Home = () => {
 
   const handleCategorySelect = (category) => {
     setSelectedCategory(category);
-    setNavbarVisible(false); // Close the navbar after selecting the category
+    setNavbarVisible(false);
   };
 
   useEffect(() => {
@@ -98,10 +99,11 @@ const Home = () => {
         toggleNavbar={toggleNavbar}
         onCategorySelect={handleCategorySelect} // Pass handler to navbar
       />
-      <Header toggleNavbar={toggleNavbar} />
-      <View style={[styles.headerView, styles.overlay]}>
+      <Header toggleNavbar={toggleNavbar} products={filteredProducts} />
+      {/* <View style={[styles.headerView, styles.overlay]}>
         <Text style={styles.header}>Featured Products</Text>
-      </View>
+      </View> */}
+      <BannerSlider />
       <ProductList products={filteredProducts} category={selectedCategory} />
     </View>
   );

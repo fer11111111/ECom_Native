@@ -12,24 +12,23 @@ const ProductCard = ({ product, category }) => {
   // const navigation = useNavigation();
   const { setSelectedProduct } = useProductContext();
 
-  const goToDetails = (product) => {
-    setSelectedProduct(product); // Set selected product in context
-    navigation.navigate('ProductDetails'); // Navigate to details page
+  const goToDetails = (prod) => {
+    setSelectedProduct(prod);
+    navigation.navigate('ProductDetails');
   };
 
-  // Check if the product is already in the cart
   useEffect(() => {
     const isInCart = cart.some((item) => item.fields.name === product.fields.name);
     setAddedToCart(isInCart);
   }, [cart, product]);
 
   const handleBuy = () => {
-    addToCart(product); // Add product to the cart when the button is clicked
-    setAddedToCart(true); // Mark the product as added to cart
+    addToCart(product);
+    setAddedToCart(true);
   };
 
   const goToCart = () => {
-    navigation.navigate('Cart'); // Navigate to Cart page
+    navigation.navigate('Cart');
   };
 
   const categoryName = product.fields.categoryName;
@@ -38,7 +37,7 @@ const ProductCard = ({ product, category }) => {
       <View style={styles.productCard}>
         <TouchableOpacity
           style={styles.productItem}
-          onPress={() => goToDetails(product)} // Navigate to product details page
+          onPress={() => goToDetails(product)}
         >
           <Image style={styles.image} source={{ uri: product.fields.media }} />
           <Text style={styles.productName}>{product.fields.name}</Text>
@@ -58,55 +57,49 @@ const ProductCard = ({ product, category }) => {
     );
   }
 
-  return null; // If no category is passed, return null
+  return null;
 };
 
 const styles = StyleSheet.create({
   productCard: {
-    marginBottom: 10,
-    backgroundColor: '#f9f9f9',
-    padding: 15,
-    borderRadius: 8,
+    flex: 1,
+    margin: 10,
+    backgroundColor: '#ffffff',
+    borderRadius: 10,
     shadowColor: '#000',
     shadowOpacity: 0.1,
-    shadowRadius: 4,
+    shadowRadius: 5,
     shadowOffset: { width: 0, height: 2 },
-    borderWidth: 2,
-    borderColor: '#000',
-    position: 'relative',
-    // top: 5,
-    // bottom: 1000,
+    elevation: 3,
+    padding: 10,
+    alignItems: 'center',
   },
   image: {
-    width: '100%',
-    height: 300,
-    borderRadius: 8,
+    width: 120,
+    height: 120,
+    borderRadius: 10,
     marginBottom: 10,
   },
   productName: {
-    fontSize: 18,
-    fontWeight: '500',
+    fontSize: 16,
+    fontWeight: '600',
+    // textAlign: 'center',
     marginBottom: 5,
+    color: '#333',
   },
   productPrice: {
-    fontSize: 16,
-    fontWeight: '400',
-    color: '#4CAF50',
-  },
-  productCategory: {
     fontSize: 14,
-    color: '#888',
+    fontWeight: '500',
+    color: '#4CAF50',
     marginBottom: 10,
   },
   buyButton: {
-    position: 'absolute',
-    bottom: 5,
-    width: '30%',
+    width: 80,
     alignItems: 'center',
-    padding: 15,
+    paddingVertical: 8,
     backgroundColor: '#262523',
-    borderRadius: 10,
-    left: '70%',
+    borderRadius: 5,
+    marginTop: 10,
   },
   buyText: {
     fontSize: 14,
@@ -114,7 +107,7 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
   },
   goToCartText: {
-    fontSize: 13,
+    fontSize: 12,
     color: '#fff',
     fontWeight: 'bold',
   },

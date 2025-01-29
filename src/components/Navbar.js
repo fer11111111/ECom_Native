@@ -21,7 +21,7 @@ const Navbar = ({ isVisible, onClose, toggleNavbar, onCategorySelect }) => {
         },
       })
       .then(response => {
-        setCategories(response.data.items); // Ensure this matches the correct data structure
+        setCategories(response.data.items);
       })
       .catch(error => {
         console.error('Error fetching categories:', error);

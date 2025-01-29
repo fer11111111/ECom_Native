@@ -20,8 +20,6 @@ import Home from './src/screens/Home';
 import CartPage from './src/components/CartPage';
 import ProductDetails from './src/screens/ProductDetails';
 
-// const SPACE_ID = 'gxz2kpjfag3c';
-// const ACCESS_TOKEN = 'bYq8sH_BpvozOhUgYIoBLxXdo0MAdbkdR1DrQJWDtMA';
 
 const Stack = createStackNavigator();
 
@@ -53,6 +51,8 @@ const App = () => {
       </NavigationContainer>
     </CartProvider>
     </ProductProvider>
+  );
+};
 
 const styles = StyleSheet.create({
   container: {
