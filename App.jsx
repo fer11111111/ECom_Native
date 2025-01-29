@@ -10,23 +10,15 @@ import {
   SafeAreaView,
 } from 'react-native';
 
-// import axios from 'axios';
-// import Navbar from './src/components/Navbar';
-// import ProductList from './src/components/ProductList';
 import LottieView from 'lottie-react-native';
 import {NavigationContainer} from '@react-navigation/native';
 import {createStackNavigator} from '@react-navigation/stack';
 import { CartProvider } from './src/CartContext';
 import { ProductProvider } from './src/ProductContext';
 import SpinWheel from './src/components/SpinWheel';
-// import MenuButton from './src/components/MenuButton';
-// import Header from './src/components/Header';
-// import Game from './src/components/Game';
 import Home from './src/screens/Home';
-import Sort from './src/screens/Sort';
 import CartPage from './src/components/CartPage';
 import ProductDetails from './src/screens/ProductDetails';
-import ProductDetailsPage from './src/screens/ProductDetailsPage';
 
 // const SPACE_ID = 'gxz2kpjfag3c';
 // const ACCESS_TOKEN = 'bYq8sH_BpvozOhUgYIoBLxXdo0MAdbkdR1DrQJWDtMA';
@@ -47,14 +39,11 @@ const App = () => {
           <Stack.Navigator screenOptions={{ headerShown: false }}>
             <Stack.Screen name="Home" component={Home} />
             <Stack.Screen name="ProductDetails" component={ProductDetails} />
-            <Stack.Screen name="ProductDetailsPage" component={ProductDetailsPage} />
-            <Stack.Screen name="Sort" component={Sort} />
             <Stack.Screen name="Cart" component={CartPage} />
           </Stack.Navigator>
-          {/* Spin Wheel Overlay */}
+          
           <SpinWheel visible={isOverlayVisible} onClose={toggleOverlay} />
 
-          {/* Button to trigger overlay */}
           <TouchableOpacity
             style={styles.overlayButton}
             onPress={toggleOverlay}>
@@ -64,18 +53,6 @@ const App = () => {
       </NavigationContainer>
     </CartProvider>
     </ProductProvider>
-
-
-      /* <Game isVisible={isGameVisible} onClose={toggleGame} toggleGame={toggleGame} />
-      <Navbar
-        isVisible={isGameVisible}
-        onClose={toggleGame}
-      /> */
-    //   <Header toggleNavbar={toggleNavbar} />
-    //   <ProductList products={products} selectedProduct={selectedProduct} setSelectedProduct={setSelectedProduct} />
-    // </View>
-  );
-};
 
 const styles = StyleSheet.create({
   container: {
